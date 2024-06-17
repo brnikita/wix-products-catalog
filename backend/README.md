@@ -14,7 +14,8 @@ This directory can contain shared resources and utilities like data transfer obj
  - guards: Contains custom guards.
  - interceptors: Contains custom interceptors.
  - pipes: Contains custom pipes.
- - Products Directory
+ 
+ ### Products Directory
  - dto: Contains the data transfer objects used for product-related operations.
 
  - create-product.dto.ts: DTO for creating a new product.
