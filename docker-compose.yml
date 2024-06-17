@@ -6,9 +6,9 @@ services:
     image: postgres:13
     container_name: postgres
     environment:
-      POSTGRES_USER: yourusername
-      POSTGRES_PASSWORD: yourpassword
-      POSTGRES_DB: yourdatabase
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
     ports:
       - "5432:5432"
     volumes:
@@ -20,13 +20,13 @@ services:
       context: ./backend
     container_name: nestjs_app
     environment:
-      DATABASE_HOST: postgres
-      DATABASE_PORT: 5432
-      DATABASE_USERNAME: yourusername
-      DATABASE_PASSWORD: yourpassword
-      DATABASE_NAME: yourdatabase
-      # Add other environment variables like Wix API Key here
-      WIX_API_KEY: your_wix_api_key
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      WIX_API_URL: ${WIX_API_URL}
+      WIX_API_KEY: ${WIX_API_KEY}
     ports:
       - "3000:3000"
     depends_on:
