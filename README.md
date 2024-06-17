@@ -11,10 +11,16 @@ following command:
 cp .env.template .env
 ```
 
-Run the development server:
+Run the production server:
 
 ```bash
 docker-compose up
+```
+
+Run the development server:
+
+```bash
+docker-compose -f .\docker-compose.dev.yml up
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.

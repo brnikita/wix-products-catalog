@@ -22,12 +22,12 @@ export class ProductsService {
   }
 
   findOne(id: number) {
-    return this.productsRepository.findOne(id);
+    return this.productsRepository.findOne({ where: { id } });
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
     await this.productsRepository.update(id, updateProductDto);
-    return this.productsRepository.findOne(id);
+    return this.productsRepository.findOne({ where: { id } });
   }
 
   remove(id: number) {
