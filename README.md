@@ -1,5 +1,5 @@
-# Wix Producs Catalog
-Wix Producs Catalog
+# Wix Products Catalog
+Wix Products Catalog
 
 
 ## Getting Started
