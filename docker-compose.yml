@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: yourusername
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: yourdatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Backend - Nest.js
+  backend:
+    build:
+      context: ./backend
+    container_name: nestjs_app
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: yourusername
+      DATABASE_PASSWORD: yourpassword
+      DATABASE_NAME: yourdatabase
+      # Add other environment variables like Wix API Key here
+      WIX_API_KEY: your_wix_api_key
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  # Frontend - Vue.js
+  frontend:
+    build:
+      context: ./frontend
+    container_name: vue_app
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
