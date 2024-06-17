@@ -1,2 +1,2 @@
-# wix-products-catalog
+# Wix Producs Catalog
 Wix Producs Catalog
