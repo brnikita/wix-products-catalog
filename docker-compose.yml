@@ -13,6 +13,8 @@ services:
       - "5433:5433"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - wix-catalog-network
 
   # Backend - Nest.js
   backend:
@@ -20,11 +22,13 @@ services:
       context: ./backend
     container_name: wix-products-catalog-backend
     env_file:
-      - .env
+      - ./backend/.env
     ports:
       - "3000:3000"
     depends_on:
       - postgres
+    networks:
+      - wix-catalog-network
 
   # Frontend - Vue.js
   frontend:
@@ -32,11 +36,17 @@ services:
       context: ./frontend
     container_name: wix-products-catalog-frontend
     env_file:
-      - .env
+      - ./backend/.env
     ports:
       - "8080:80"
     depends_on:
       - backend
+    networks:
+      - wix-catalog-network
 
 volumes:
   postgres_data:
+
+networks:
+  wix-catalog-network:
+    driver: bridge
