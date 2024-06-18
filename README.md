@@ -8,7 +8,7 @@ Make sure to have the environment variables set up correctly, you can copy the v
 following command:
 
 ```bash
-cp .env.template .env
+cp backend/.env.template backend/.env
 ```
 
 Run the production server:

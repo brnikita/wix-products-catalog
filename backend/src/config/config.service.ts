@@ -8,8 +8,13 @@ export class ConfigService {
   private readonly envConfig: { [key: string]: string };
 
   constructor() {
-    const envFile = path.resolve(__dirname, '../../../.env'); // Adjust path as needed
-    this.envConfig = dotenv.parse(fs.readFileSync(envFile));
+    const envFile = path.resolve(__dirname, '../../.env'); 
+    if (fs.existsSync(envFile)) {
+      this.envConfig = dotenv.parse(fs.readFileSync(envFile));
+    } else {
+      // Fallback to process env variables when .env file is not found
+      this.envConfig = process.env as { [key: string]: string };
+    }
   }
 
   get(key: string): string {

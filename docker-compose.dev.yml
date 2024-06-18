@@ -20,8 +20,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile.dev
     container_name: wix-products-catalog-backend
-    env_file:
-      - .env
     ports:
       - "3001:3001"
     volumes:

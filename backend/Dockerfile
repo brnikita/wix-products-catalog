@@ -1,5 +1,5 @@
 # Use node official image as base
-FROM node:14
+FROM node:18-alpine
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -12,6 +12,9 @@ RUN npm install
 
 # Copy the rest of the application code
 COPY . .
+
+# Copy the environment file
+COPY ../.env ./.env
 
 # Build the TypeScript code
 RUN npm run build
