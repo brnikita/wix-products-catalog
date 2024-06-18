@@ -1,16 +1,11 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
   postgres:
     image: postgres:13
     container_name: wix-products-catalog-postgres
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -18,7 +13,6 @@ services:
     env_file:
       - ./backend/.env
 
-  # Backend - Nest.js
   backend:
     build:
       context: ./backend
@@ -36,7 +30,6 @@ services:
     env_file:
       - ./backend/.env
 
-  # Frontend - Vue.js
   frontend:
     build:
       context: ./frontend
