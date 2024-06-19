@@ -4,7 +4,7 @@ import CreateProduct from '../views/CreateProduct.vue';
 
 const routes = [
   { path: '/', name: 'Products', component: Products },
-  { path: '/products/create', name: 'CreateProduct', component: CreateProduct },
+  { path: '/create', name: 'CreateProduct', component: CreateProduct },
 ];
 
 const router = createRouter({

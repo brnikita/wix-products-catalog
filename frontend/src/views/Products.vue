@@ -24,14 +24,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'Products',
   setup() {
     const store = useStore();
-    const products = store.getters.allProducts;
+    const products = computed(() => store.getters.allProducts);
 
     onMounted(() => {
       store.dispatch('fetchProducts');
