@@ -1,5 +1,5 @@
 # Use node official image as base for the build stage
-FROM node:14 AS builder
+FROM node:18-alpine AS builder
 
 # Set the working directory
 WORKDIR /usr/src/app
