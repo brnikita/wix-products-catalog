@@ -12,6 +12,9 @@ export default defineConfig({
     port: 3000,
     host: true,  // This ensures the server is accessible externally
   },
+  watch: {
+    usePolling: true  // Needed for Docker on some OSes
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
