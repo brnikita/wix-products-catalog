@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Products from '../views/Products.vue';
+import Products from '../views/Products_old.vue';
 import CreateProduct from '../views/CreateProduct.vue';
 
 const routes = [
