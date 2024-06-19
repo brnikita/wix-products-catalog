@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-4">
     <router-link to="/" class="text-blue-500 hover:text-blue-700">← Back to Products</router-link>
     <h1 class="text-2xl mb-4">Create Product</h1>
     <ProductForm />

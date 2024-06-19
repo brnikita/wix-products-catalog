@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createProduct" class="max-w-lg mx-auto p-4 bg-white rounded shadow">
+  <form @submit.prevent="createProduct" class="max-w-lg p-4 bg-white rounded shadow">
     <div class="mb-4">
       <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
       <input
