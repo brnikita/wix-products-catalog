@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+// TODO: doesn't load from .env file for some reason
+// const API_URL = import.meta.env.VUE_APP_SERVER_API_URL;
+const API_URL = 'http://localhost:8000'
+
 const state = {
   products: [],
 };
@@ -10,19 +14,19 @@ const getters = {
 
 const actions = {
   async fetchProducts({ commit }: any) {
-    const response = await axios.get('/products');
+    const response = await axios.get(`${API_URL}/api/products`);
     commit('setProducts', response.data);
   },
   async createProduct({ commit }: any, product: any) {
-    await axios.post('/products', product);
+    await axios.post(`${API_URL}/api/products`, product);
     commit('newProduct', product);
   },
   async updateProduct({ commit }: any, updatedProduct: any) {
-    await axios.patch(`/products/${updatedProduct.id}`, updatedProduct);
+    await axios.patch(`${API_URL}/api/products/${updatedProduct.id}`, updatedProduct);
     commit('modifyProduct', updatedProduct);
   },
   async deleteProduct({ commit }: any, id: number) {
-    await axios.delete(`/products/${id}`);
+    await axios.delete(`${API_URL}/api/products/${id}`);
     commit('removeProduct', id);
   },
 };

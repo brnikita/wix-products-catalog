@@ -42,6 +42,8 @@ services:
       - wix-catalog-network
     environment:
       - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./frontend/.env
 
 volumes:
   postgres_data:
