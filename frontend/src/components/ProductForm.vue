@@ -1,5 +1,8 @@
 <template>
   <form @submit.prevent="submitForm" class="max-w-lg p-4 bg-white rounded shadow">
+    <div v-if="successStatus" class="mb-4 p-2 bg-green-100 text-green-700 rounded">
+      {{ successStatus }}
+    </div>
     <div class="mb-4">
       <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
       <input
@@ -91,6 +94,7 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
+    
     const productForm = reactive({
       title: '',
       picture: '',
@@ -114,6 +118,7 @@ export default defineComponent({
     });
 
     const isEditMode = computed(() => !!props.productId);
+    const successStatus = computed(() => store.getters.successStatus);
 
     watch(
       () => props.productData,
@@ -139,7 +144,7 @@ export default defineComponent({
       }
     };
 
-    return { productForm, submitForm, showErrors, isFormInValid, isEditMode };
+    return { productForm, submitForm, showErrors, isFormInValid, isEditMode, successStatus };
   },
 });
 </script>

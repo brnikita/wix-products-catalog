@@ -7,11 +7,13 @@ const API_URL = 'http://localhost:8000'
 const state = {
   products: [],
   currentProduct: null, // for editing and loading to the form of the single product
+  successStatus: '', // for showing success message after creating or updating product
 };
 
 const getters = {
   allProducts: (state: any) => state.products,
   currentProduct: (state: any) => state.currentProduct,
+  successStatus: (state: any) => state.successStatus,
 };
 
 const actions = {
@@ -20,12 +22,20 @@ const actions = {
     commit('setProducts', response.data);
   },
   async createProduct({ commit }: any, product: any) {
-    await axios.post(`${API_URL}/api/products`, product);
-    commit('newProduct', product);
+    const response = await axios.post(`${API_URL}/api/products`, product);
+    if (response.status === 201) {
+      commit('newProduct', response.data);
+      commit('setSuccessStatus', 'Product created successfully!');
+      setTimeout(() => commit('clearSuccessStatus'), 4000);
+    }
   },
   async updateProduct({ commit }: any, updatedProduct: any) {
-    await axios.patch(`${API_URL}/api/products/${updatedProduct.id}`, updatedProduct);
-    commit('modifyProduct', updatedProduct);
+    const response = await axios.patch(`${API_URL}/api/products/${updatedProduct.id}`, updatedProduct);
+    if (response.status === 200) {
+      commit('modifyProduct', updatedProduct);
+      commit('setSuccessStatus', 'Product updated successfully!');
+      setTimeout(() => commit('clearSuccessStatus'), 4000);
+    }
   },
   async deleteProduct({ commit }: any, id: number) {
     await axios.delete(`${API_URL}/api/products/${id}`);
@@ -50,6 +60,8 @@ const mutations = {
     state.products = state.products.filter((product: any) => product.id !== id);
   },
   setCurrentProduct: (state: any, product: any) => (state.currentProduct = product),
+  setSuccessStatus: (state: any, status: string) => (state.successStatus = status),
+  clearSuccessStatus: (state: any) => (state.successStatus = ''),
 };
 
 export default {
