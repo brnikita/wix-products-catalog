@@ -6,10 +6,12 @@ const API_URL = 'http://localhost:8000'
 
 const state = {
   products: [],
+  currentProduct: null, // for editing and loading to the form of the single product
 };
 
 const getters = {
   allProducts: (state: any) => state.products,
+  currentProduct: (state: any) => state.currentProduct,
 };
 
 const actions = {
@@ -29,6 +31,10 @@ const actions = {
     await axios.delete(`${API_URL}/api/products/${id}`);
     commit('removeProduct', id);
   },
+  async fetchProduct({ commit }: any, id: number) { 
+    const response = await axios.get(`${API_URL}/api/products/${id}`);
+    commit('setCurrentProduct', response.data);
+  },
 };
 
 const mutations = {
@@ -43,6 +49,7 @@ const mutations = {
   removeProduct: (state: any, id: number) => {
     state.products = state.products.filter((product: any) => product.id !== id);
   },
+  setCurrentProduct: (state: any, product: any) => (state.currentProduct = product),
 };
 
 export default {

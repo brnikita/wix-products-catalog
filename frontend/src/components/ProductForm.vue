@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, onMounted } from 'vue';
+import { defineComponent, reactive, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
@@ -82,6 +82,10 @@ export default defineComponent({
   props: {
     productId: {
       type: Number,
+      default: null,
+    },
+    productData: {
+      type: Object,
       default: null,
     },
   },
@@ -111,14 +115,15 @@ export default defineComponent({
 
     const isEditMode = computed(() => !!props.productId);
 
-    onMounted(() => {
-      if (isEditMode.value) {
-        const product = store.getters.allProducts.find((p: any) => p.id === props.productId);
-        if (product) {
-          Object.assign(productForm, product);
+    watch(
+      () => props.productData,
+      (newProductData) => {
+        if (newProductData) {
+          Object.assign(productForm, newProductData);
         }
-      }
-    });
+      },
+      { immediate: true }
+    );
 
     const submitForm = () => {
       if (!isFormValid.value) return;
