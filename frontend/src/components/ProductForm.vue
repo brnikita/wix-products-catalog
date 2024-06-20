@@ -14,6 +14,17 @@
       <span v-if="showErrors.title" class="text-red-500 text-xs italic">Title is required.</span>
     </div>
     <div class="mb-4">
+      <label for="title" class="block text-gray-700 text-sm font-bold mb-2">SKU</label>
+      <input
+        id="title"
+        v-model="productForm.sku"
+        type="number"
+        step="1"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      />
+      <span v-if="showErrors.title" class="text-red-500 text-xs italic">SKU must be a positive number.</span>
+    </div>
+    <div class="mb-4">
       <label for="picture" class="block text-gray-700 text-sm font-bold mb-2">Picture URL</label>
       <input
         id="picture"
@@ -29,20 +40,10 @@
         id="price"
         v-model="productForm.price"
         type="number"
-        step="1"
+        step="any"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
       <span v-if="showErrors.price" class="text-red-500 text-xs italic">Price must be a positive number.</span>
-    </div>
-    <div class="mb-4">
-      <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Category</label>
-      <input
-        id="category"
-        v-model="productForm.category"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      />
-      <span v-if="showErrors.category" class="text-red-500 text-xs italic">Category is required.</span>
     </div>
     <div class="mb-4">
       <label for="inventory" class="block text-gray-700 text-sm font-bold mb-2">Inventory</label>
@@ -97,18 +98,18 @@ export default defineComponent({
     
     const productForm = reactive({
       title: '',
+      sku: 0,
       picture: '',
       price: 0,
-      category: '',
       inventory: 0,
       description: '',
     });
     const isFormSubmitted = ref(false);
     const showErrors = reactive({
       title: computed(() => isFormSubmitted.value && !!!productForm.title),
+      sku: computed(() => isFormSubmitted.value && !(productForm.price > 0)),
       picture: computed(() => isFormSubmitted.value && !!!productForm.picture),
       price: computed(() => isFormSubmitted.value && !(productForm.price > 0)),
-      category: computed(() => isFormSubmitted.value && !!!productForm.category),
       inventory: computed(() => isFormSubmitted.value && !(productForm.inventory > 0)),
       description: computed(() => isFormSubmitted.value && !!!productForm.description),
     });

@@ -9,13 +9,13 @@ export class Product {
   title: string;
 
   @Column()
+  sku: number;
+
+  @Column()
   picture: string;
 
-  @Column()
+  @Column('float')
   price: number;
-
-  @Column()
-  category: string;
 
   @Column()
   inventory: number;

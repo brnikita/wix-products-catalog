@@ -4,7 +4,24 @@ import axios from 'axios';
 // const API_URL = import.meta.env.VUE_APP_SERVER_API_URL;
 const API_URL = 'http://localhost:8000'
 
-const state = {
+interface Product {
+  id: number;
+  title: string;
+  sku: number;
+  picture: string;
+  price: number;
+  inventory: number;
+  description: string;
+}
+
+// Define the structure of the state
+interface State {
+  products: Product[];
+  currentProduct: Product | null;
+  successStatus: string;
+}
+
+const state: State = {
   products: [],
   currentProduct: null, // for editing and loading to the form of the single product
   successStatus: '', // for showing success message after creating or updating product
