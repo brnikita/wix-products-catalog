@@ -2,19 +2,28 @@ import axios from 'axios';
 
 // TODO: doesn't load from .env file for some reason
 // const API_URL = import.meta.env.VUE_APP_SERVER_API_URL;
-const API_URL = 'http://localhost:8000'
+const API_URL = 'http://localhost:8000';
 
 interface Product {
   id: number;
   title: string;
-  sku: number;
+  sku: string;
   picture: string;
   price: number;
   inventory: number;
   description: string;
+  media?: { src: string; title?: string }[];
+  productType?: string;
+  brand?: string;
+  ribbon?: string;
+  variants?: {
+    options: { [key: string]: string };
+    sku?: string;
+    price?: number;
+    inventory?: number;
+  }[];
 }
 
-// Define the structure of the state
 interface State {
   products: Product[];
   currentProduct: Product | null;
@@ -23,8 +32,8 @@ interface State {
 
 const state: State = {
   products: [],
-  currentProduct: null, // for editing and loading to the form of the single product
-  successStatus: '', // for showing success message after creating or updating product
+  currentProduct: null,
+  successStatus: '',
 };
 
 const getters = {
@@ -49,7 +58,7 @@ const actions = {
   async updateProduct({ commit }: any, updatedProduct: any) {
     const response = await axios.patch(`${API_URL}/api/products/${updatedProduct.id}`, updatedProduct);
     if (response.status === 200) {
-      commit('modifyProduct', updatedProduct);
+      commit('modifyProduct', response.data);
       commit('setSuccessStatus', 'Product updated successfully!');
       setTimeout(() => commit('clearSuccessStatus'), 4000);
     }
@@ -58,7 +67,7 @@ const actions = {
     await axios.delete(`${API_URL}/api/products/${id}`);
     commit('removeProduct', id);
   },
-  async fetchProduct({ commit }: any, id: number) { 
+  async fetchProduct({ commit }: any, id: number) {
     const response = await axios.get(`${API_URL}/api/products/${id}`);
     commit('setCurrentProduct', response.data);
   },

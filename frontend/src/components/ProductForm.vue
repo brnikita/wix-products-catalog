@@ -14,15 +14,14 @@
       <span v-if="showErrors.title" class="text-red-500 text-xs italic">Title is required.</span>
     </div>
     <div class="mb-4">
-      <label for="title" class="block text-gray-700 text-sm font-bold mb-2">SKU</label>
+      <label for="sku" class="block text-gray-700 text-sm font-bold mb-2">SKU</label>
       <input
-        id="title"
+        id="sku"
         v-model="productForm.sku"
-        type="number"
-        step="1"
+        type="text"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
-      <span v-if="showErrors.title" class="text-red-500 text-xs italic">SKU must be a positive number.</span>
+      <span v-if="showErrors.sku" class="text-red-500 text-xs italic">SKU is required.</span>
     </div>
     <div class="mb-4">
       <label for="picture" class="block text-gray-700 text-sm font-bold mb-2">Picture URL</label>
@@ -64,6 +63,7 @@
       ></textarea>
       <span v-if="showErrors.description" class="text-red-500 text-xs italic">Description is required.</span>
     </div>
+    <!-- Add new fields here as necessary -->
 
     <div class="flex items-center justify-between">
       <button
@@ -98,16 +98,17 @@ export default defineComponent({
     
     const productForm = reactive({
       title: '',
-      sku: 0,
+      sku: '',
       picture: '',
       price: 0,
       inventory: 0,
       description: '',
+      // Add other fields here as needed
     });
     const isFormSubmitted = ref(false);
     const showErrors = reactive({
       title: computed(() => isFormSubmitted.value && !!!productForm.title),
-      sku: computed(() => isFormSubmitted.value && !(productForm.price > 0)),
+      sku: computed(() => isFormSubmitted.value && !!!productForm.sku),
       picture: computed(() => isFormSubmitted.value && !!!productForm.picture),
       price: computed(() => isFormSubmitted.value && !(productForm.price > 0)),
       inventory: computed(() => isFormSubmitted.value && !(productForm.inventory > 0)),

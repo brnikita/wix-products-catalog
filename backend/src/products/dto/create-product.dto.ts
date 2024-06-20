@@ -1,21 +1,51 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsArray } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
   title: string;
 
+  @IsString()
+  @IsOptional()
+  description?: string;
+
   @IsNumber()
-  sku: number;
+  @IsOptional()
+  price?: number;
 
   @IsString()
-  picture: string;
+  @IsOptional()
+  sku?: string;
 
   @IsNumber()
-  price: number;
-
-  @IsNumber()
-  inventory: number;
+  @IsOptional()
+  inventory?: number;
 
   @IsString()
-  description: string;
+  @IsOptional()
+  picture?: string;
+
+  @IsArray()
+  @IsOptional()
+  media?: { src: string; title?: string }[];
+
+  @IsString()
+  @IsOptional()
+  productType?: string;
+
+  @IsString()
+  @IsOptional()
+  brand?: string;
+
+  @IsString()
+  @IsOptional()
+  ribbon?: string;
+
+  @IsArray()
+  @IsOptional()
+  variants?: {
+    options: { [key: string]: string };
+    sku?: string;
+    price?: number;
+    inventory?: number;
+  }[];
 }
