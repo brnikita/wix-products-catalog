@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createProduct" class="max-w-lg p-4 bg-white rounded shadow">
+  <form @submit.prevent="submitForm" class="max-w-lg p-4 bg-white rounded shadow">
     <div class="mb-4">
       <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
       <input
@@ -60,25 +60,32 @@
       ></textarea>
       <span v-if="!validations.description" class="text-red-500 text-xs italic">Description is required.</span>
     </div>
+
     <div class="flex items-center justify-between">
       <button
         type="submit"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         :disabled="!isFormValid"
       >
-        Create Product
+        {{ isEditMode ? 'Update Product' : 'Create Product' }}
       </button>
     </div>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from 'vue';
+import { defineComponent, reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'ProductForm',
-  setup() {
+  props: {
+    productId: {
+      type: Number,
+      default: null,
+    },
+  },
+  setup(props) {
     const store = useStore();
     const productForm = reactive({
       title: '',
@@ -102,12 +109,27 @@ export default defineComponent({
       return Object.values(validations).every(validation => validation);
     });
 
-    const createProduct = () => {
+    const isEditMode = computed(() => !!props.productId);
+
+    onMounted(() => {
+      if (isEditMode.value) {
+        const product = store.getters.allProducts.find((p: any) => p.id === props.productId);
+        if (product) {
+          Object.assign(productForm, product);
+        }
+      }
+    });
+
+    const submitForm = () => {
       if (!isFormValid.value) return;
-      store.dispatch('createProduct', productForm);
+      if (isEditMode.value) {
+        store.dispatch('updateProduct', { ...productForm, id: props.productId });
+      } else {
+        store.dispatch('createProduct', productForm);
+      }
     };
 
-    return { productForm, createProduct, validations, isFormValid };
+    return { productForm, submitForm, validations, isFormValid, isEditMode };
   },
 });
 </script>

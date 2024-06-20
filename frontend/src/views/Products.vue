@@ -25,7 +25,7 @@
             <td class="px-6 py-4 whitespace-nowrap">{{ product.price }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ product.inventory }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <button @click="editProduct(product)" class="text-indigo-600 hover:text-indigo-900">Edit</button>
+              <button @click="navigateToEdit(product.id)" class="text-indigo-600 hover:text-indigo-900">Edit</button>
               <button @click="deleteProduct(product.id)" class="text-red-600 hover:text-red-900 ml-2">Delete</button>
             </td>
           </tr>
@@ -65,15 +65,15 @@
         window.location.href = '/create';
       };
   
-      const editProduct = (product: any) => {
-        // logic to edit product
+      const navigateToEdit = (id: number) => {
+        window.location.href = `/edit/${id}`;
       };
   
       const deleteProduct = (id: number) => {
         store.dispatch('deleteProduct', id);
       };
   
-      return { products, navigateToCreate, editProduct, deleteProduct };
+      return { products, navigateToCreate, navigateToEdit, deleteProduct };
     },
   });
   </script>
